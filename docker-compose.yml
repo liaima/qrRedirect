@@ -16,7 +16,7 @@ services:
     volumes:
       - ./node:/app
     working_dir: /app
-    command: ['npm', 'run', 'dev']
+    command: ['npm', 'run', $NODE_ENV]
       #command: ['node', 'index.js']
     env_file:
       - .env
