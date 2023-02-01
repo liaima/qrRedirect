@@ -1,0 +1,24 @@
+version: '3'
+  
+services:
+
+  db:
+    image: postgres:14.2-alpine
+    env_file:
+      - .env
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    ports:
+      - $POSTGRES_PORT:5432
+
+  node:
+    image: node:16
+    volumes:
+      - ./node:/app
+    working_dir: /app
+    command: ['npm', 'run', 'dev']
+      #command: ['node', 'index.js']
+    env_file:
+      - .env
+    ports:
+      - $NODE_PORT:8000
