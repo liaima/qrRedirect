@@ -24,18 +24,22 @@ export const getSlug = async (req, res) => {
 
   const qr = await Qr.findOne({ where: { slug } });
   if (qr) {
-    const newScan = await Scan.create({
+    await Scan.create({
       qrId: qr.id,
-      timestamp: new Date()
+      timestamp: new Date(),
+      ip: location.ip,
+      city: location.city || null,
+      region: location.region || null,
+      country: location.country || null,
+      latitude: location.latitude || null,
+      longitude: location.longitude || null
     })
-    console.log(newScan);
     res.redirect(301, qr.url);
   }else{
     res.status(404).send({
       statusCode: res.statusCode,
       title: 'Slug not found',
       message: `Sorry, we cannot find ${slug}!`,
-      ip,
       location
     });
   }

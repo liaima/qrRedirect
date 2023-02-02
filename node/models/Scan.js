@@ -12,6 +12,24 @@ const Scan = db.define(
     timestamp: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW
+    },
+    ip: {
+      type: DataTypes.STRING
+    },
+    city: {
+      type: DataTypes.STRING
+    },
+    region: {
+      type: DataTypes.STRING
+    },
+    country: {
+      type: DataTypes.STRING
+    },
+    latitude: {
+      type: DataTypes.FLOAT
+    },
+    longitude: {
+      type: DataTypes.FLOAT
     }
   },
   {
