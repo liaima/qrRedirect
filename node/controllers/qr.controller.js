@@ -1,8 +1,19 @@
 import Qr from '../models/Qr.js';
 import Scan from '../models/Scan.js';
+import fetch from 'node-fetch';
+
+const getLocation = async (ip) => {
+  var fetch_res = await fetch(`https://ipapi.co/${ip}/json/`);
+  var fetch_data = await fetch_res.json()
+
+  res.send(`You are from ${fetch_data.region}`)
+}
 
 export const getSlug = async (req, res) => {
   const { slug } = req.params;
+  const ip = req.ip;
+
+  console.log(ip);
   
   !slug && res.status(400).send({
     statusCode: res.statusCode,
