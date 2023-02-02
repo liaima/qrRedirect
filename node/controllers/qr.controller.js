@@ -11,7 +11,8 @@ const getLocation = async (ip) => {
 
 export const getSlug = async (req, res) => {
   const { slug } = req.params;
-  const ip = req.ip;
+  const ip = req.headers['x-forwarded-for']?.split(',').shift()
+    || req.socket?.remoteAddress
 
   console.log(ip);
   
@@ -33,7 +34,8 @@ export const getSlug = async (req, res) => {
     res.status(404).send({
       statusCode: res.statusCode,
       title: 'Slug not found',
-      message: `Sorry, we cannot find ${slug}!`
+      message: `Sorry, we cannot find ${slug}!`,
+      ip
     });
   }
 
