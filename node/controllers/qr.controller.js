@@ -6,7 +6,7 @@ const getLocation = async (ip) => {
   var fetch_res = await fetch(`https://ipapi.co/${ip}/json/`);
   var fetch_data = await fetch_res.json()
 
-  res.send(`You are from ${fetch_data.region}`)
+  return fetch_data;
 }
 
 export const getSlug = async (req, res) => {
@@ -14,7 +14,7 @@ export const getSlug = async (req, res) => {
   const ip = req.headers['x-forwarded-for']?.split(',').shift()
     || req.socket?.remoteAddress
 
-  console.log(ip);
+  const location = await getLocation(ip);
   
   !slug && res.status(400).send({
     statusCode: res.statusCode,
@@ -35,7 +35,8 @@ export const getSlug = async (req, res) => {
       statusCode: res.statusCode,
       title: 'Slug not found',
       message: `Sorry, we cannot find ${slug}!`,
-      ip
+      ip,
+      location
     });
   }
 
